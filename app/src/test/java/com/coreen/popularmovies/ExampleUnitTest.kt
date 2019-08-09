@@ -1,4 +1,4 @@
-package com.coreen.myapplication
+package com.coreen.popularmovies
 
 import org.junit.Test
 
