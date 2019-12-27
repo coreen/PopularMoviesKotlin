@@ -9,7 +9,6 @@ import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.model.SortBy
 import com.coreen.popularmovies.service.MovieDbApiService
 import com.coreen.popularmovies.service.MovieResponse
-import com.coreen.popularmovies.utility.MovieDbJsonUtil
 import com.coreen.popularmovies.utility.MovieResponseUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,9 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     // default sort is by popular movies
     private val mSort : SortBy = SortBy.POPULAR
-//    private val movieDbApiServe by lazy {
-//        MovieDbApiService.create()
-//    }
 
     var mGridView : GridView? = null
 
@@ -31,16 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Timber.plant(Timber.DebugTree())
 
-        /**
-         * Initialize after implementing BaseAdapter
-         *
-         * https://stackoverflow.com/questions/46151681/how-can-we-implement-base-adapter-with-kotlin-in-android
-         */
         mGridView = findViewById(R.id.gridview_movie)
-//        mGridView!!.adapter = MovieAdapter(
-//                this,
-//                Array(2) { i -> Movie("myTitle" + i.toString(), "relativeImagePath",
-//                        "mySummary", "myReleaseDate", "myVoteAvg") })
         loadMovieData()
     }
 
@@ -63,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         /**
-         * Setting the types in Kotlin is tricky...
+         * Network call setup
          *
          * https://www.c-sharpcorner.com/article/how-to-use-retrofit-2-with-android-using-kotlin/
          */

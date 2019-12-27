@@ -7,9 +7,6 @@ import okhttp3.Response
 import java.io.IOException
 
 const val API_KEY_QUERY = "api_key"
-// 3/movie/
-const val VERSION = "3"
-const val RESOURCE = "movie"
 
 class MovieDbInterceptor : Interceptor {
     /**
@@ -22,8 +19,6 @@ class MovieDbInterceptor : Interceptor {
         var request : Request = chain.request()
         val url : HttpUrl = request.url()
                 .newBuilder()
-//                .addPathSegment(VERSION)
-//                .addPathSegment(RESOURCE)
                 .addQueryParameter(API_KEY_QUERY, com.coreen.popularmovies.BuildConfig.apikey)
                 .build()
         request = request.newBuilder().url(url).build()
