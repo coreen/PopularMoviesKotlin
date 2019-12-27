@@ -1,6 +1,7 @@
 package com.coreen.popularmovies.utility
 
 import android.net.Uri
+import timber.log.Timber
 import java.net.URL
 
 /**
@@ -36,7 +37,9 @@ class NetworkUtil {
                 )
                 .appendQueryParameter(API_KEY_QUERY, com.coreen.popularmovies.BuildConfig.apikey)
         try {
-            return URL(builtUri.toString())
+            val url = URL(builtUri.toString())
+            Timber.v("Built url: " + url.toString())
+            return url
         } catch (exception: Exception) {
             exception.printStackTrace()
             return URL("") // equivalent of null, but Kotlin is NPE-sensitive so this is used instead

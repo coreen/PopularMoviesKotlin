@@ -13,8 +13,8 @@ const val IMAGE_DEFAULT_POSTER_SIZE = "w185"
  *
  * https://kotlinlang.org/docs/reference/data-classes.html
  */
-data class Movie constructor(val title: String, private val relativeImagePath: String,
-                             val summary: String, val releaseDate: String, val voteAvg: String) {
+data class Movie constructor(val title: String?, private val relativeImagePath: String?,
+                             val summary: String?, val releaseDate: String?, val voteAvg: String?) {
     /**
      * Getters and setters automatically defined (val => read-only, no setters; var => both)
      *

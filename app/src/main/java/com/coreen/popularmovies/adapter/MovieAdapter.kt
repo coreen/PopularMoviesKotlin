@@ -12,9 +12,13 @@ import com.coreen.popularmovies.model.Movie
  *
  * https://kotlinlang.org/docs/reference/basic-types.html#arrays
  */
-internal class MovieAdapter constructor(val context: Context, val movies: Array<Movie>): BaseAdapter() {
+internal class MovieAdapter constructor(private val context: Context,
+                                        private val movies: List<Movie>?): BaseAdapter() {
     override fun getCount(): Int {
-        return movies.size
+        if(movies != null) {
+            return movies.size
+        }
+        return 0
     }
 
     override fun getItemId(position: Int): Long {
@@ -32,7 +36,7 @@ internal class MovieAdapter constructor(val context: Context, val movies: Array<
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var dummyTextView = TextView(context)
-        dummyTextView.text = movies[position].title
+        dummyTextView.text = movies!![position].title
         return dummyTextView
     }
 }
