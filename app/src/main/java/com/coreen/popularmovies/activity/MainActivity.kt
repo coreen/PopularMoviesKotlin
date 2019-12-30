@@ -2,6 +2,8 @@ package com.coreen.popularmovies.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.GridView
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
@@ -20,14 +22,25 @@ class MainActivity : AppCompatActivity() {
     // default sort is by popular movies
     private val mSort : SortBy = SortBy.POPULAR
 
-    var mGridView : GridView? = null
+    private var mRecyclerView: RecyclerView? = null
+    private var mMovieAdapter: MovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Timber.plant(Timber.DebugTree())
 
-        mGridView = findViewById(R.id.gridview_movie)
+        mRecyclerView = findViewById(R.id.recyclerview_movie)
+        mRecyclerView!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mRecyclerView!!.setHasFixedSize(true)
+        /**
+         * Unique "this" keyword syntax
+         *
+         * https://stackoverflow.com/questions/41617042/how-to-access-activity-this-in-kotlin/41620834
+         */
+        mMovieAdapter = MovieAdapter(this@MainActivity)
+        mRecyclerView!!.adapter = mMovieAdapter
+
         loadMovieData()
     }
 
@@ -61,16 +74,11 @@ class MainActivity : AppCompatActivity() {
                     val movieResponse : MovieResponse? = response.body()
                     Timber.d(mSort.name + " movies received successfully")
 
-                    Timber.d("page: " + movieResponse!!.page)
+                    Timber.d("movie count: " + movieResponse!!.results.size)
                     val movies : List<Movie> = MovieResponseUtil.parse(movieResponse)
 
-                    /**
-                     * Unique "this" keyword syntax
-                     *
-                     * https://stackoverflow.com/questions/41617042/how-to-access-activity-this-in-kotlin/41620834
-                     */
-                    val movieAdapter = MovieAdapter(this@MainActivity, movies)
-                    mGridView!!.adapter = movieAdapter
+                    mMovieAdapter!!.setMovieData(movies)
+
                 }
             }
 
