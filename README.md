@@ -4,7 +4,7 @@ Recreated [`popular-movies`](https://github.com/coreen/popular-movies) repo usin
   - Kotlin
   - Room persistance library (part of Android architecture components) for SQL manipulation instead of ContentProvider
   - Picasso - image loading
-  - Butterknife - data binding to views
+  - ~~Butterknife - data binding to views~~  NOT NEEDED WITH KOTLIN
   - Timber - built-in logger
   - GSON - JSON parsing
   - Retrofit - network requests

@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.GridView
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
@@ -20,7 +23,7 @@ import timber.log.Timber
 class MainActivity : AppCompatActivity() {
 
     // default sort is by popular movies
-    private val mSort : SortBy = SortBy.POPULAR
+    private var mSort : SortBy = SortBy.POPULAR
 
     private var mRecyclerView: RecyclerView? = null
     private var mMovieAdapter: MovieAdapter? = null
@@ -41,10 +44,34 @@ class MainActivity : AppCompatActivity() {
         mMovieAdapter = MovieAdapter(this@MainActivity)
         mRecyclerView!!.adapter = mMovieAdapter
 
-        loadMovieData()
+        loadMovieData(mSort)
     }
 
-    private fun loadMovieData() {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sort_by, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == R.id.action_favorites_sort) {
+            loadMovieData(SortBy.FAVORITES)
+            return true
+        }
+
+        if (item!!.itemId == R.id.action_top_rated_sort) {
+            loadMovieData(SortBy.TOP_RATED)
+            return true
+        }
+
+        if (item!!.itemId == R.id.action_most_popular_sort) {
+            loadMovieData(SortBy.POPULAR)
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun loadMovieData(sortBy: SortBy) {
         val movieDbApiServe = MovieDbApiService.create()
         var call : Call<MovieResponse>? = null
         /**
@@ -52,7 +79,7 @@ class MainActivity : AppCompatActivity() {
          *
          * https://kotlinlang.org/docs/reference/control-flow.html#when-expression
          */
-        when(mSort) {
+        when(sortBy) {
             SortBy.FAVORITES -> println("NotImplementException: (TODO) show Room database contents")
             SortBy.TOP_RATED -> {
                 call = movieDbApiServe.getTopRatedMovies()
@@ -62,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                 call = movieDbApiServe.getPopularMovies()
             }
         }
+        mSort = sortBy
         /**
          * Network call setup
          *
