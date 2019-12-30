@@ -10,16 +10,37 @@ import com.coreen.popularmovies.model.Movie
 import android.widget.ImageView
 import com.coreen.popularmovies.R
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
-internal class MovieAdapter constructor(private val context: Context)
+internal class MovieAdapter constructor(private val context: Context,
+                                        private val clickHandler: MovieAdapterOnClickHandler)
     : RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder>() {
 
     private var movies: List<Movie>? = null
     private var count: Int = 0
 
-    inner class MovieAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    interface MovieAdapterOnClickHandler {
+        fun onClick(selectedMovie: Movie)
+    }
+
+    /**
+     * Extend RecyclerView.ViewHolder, implement View.OnClickListener (in Kotlin)
+     *
+     * https://stackoverflow.com/questions/48391217/extend-and-implement-at-the-same-time-in-kotlin/48391246
+     */
+    inner class MovieAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val mMovieImageView: ImageView = view.findViewById(R.id.iv_movie_thumbnail)
         val mMovieTitle: TextView = view.findViewById(R.id.tv_movie_title)
+
+        // need to set this or else nothing happens on click
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            Timber.d("onClick MovieAdapterViewHolder")
+            clickHandler.onClick(movies!![adapterPosition])
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MovieAdapterViewHolder {

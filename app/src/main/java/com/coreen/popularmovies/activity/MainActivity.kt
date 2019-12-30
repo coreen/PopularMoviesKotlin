@@ -1,13 +1,11 @@
 package com.coreen.popularmovies.activity
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.GridView
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
 import com.coreen.popularmovies.model.Movie
@@ -20,12 +18,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+import kotlinx.android.synthetic.main.activity_main.*
 
+class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandler {
     // default sort is by popular movies
     private var mSort : SortBy = SortBy.POPULAR
 
-    private var mRecyclerView: RecyclerView? = null
     private var mMovieAdapter: MovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,16 +31,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Timber.plant(Timber.DebugTree())
 
-        mRecyclerView = findViewById(R.id.recyclerview_movie)
-        mRecyclerView!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mRecyclerView!!.setHasFixedSize(true)
+        /**
+         * replaced GridView setup
+         *
+         * https://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the
+         */
+        recyclerview_movie.layoutManager = GridLayoutManager(this, 5)
+        recyclerview_movie.setHasFixedSize(true)
         /**
          * Unique "this" keyword syntax
          *
          * https://stackoverflow.com/questions/41617042/how-to-access-activity-this-in-kotlin/41620834
          */
-        mMovieAdapter = MovieAdapter(this@MainActivity)
-        mRecyclerView!!.adapter = mMovieAdapter
+        mMovieAdapter = MovieAdapter(this@MainActivity, this@MainActivity)
+        recyclerview_movie.adapter = mMovieAdapter
 
         loadMovieData(mSort)
     }
@@ -69,6 +71,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onClick(selectedMovie: Movie) {
+        Timber.d("onClick MainActivity")
+        val intent = Intent(this@MainActivity, DetailActivity::class.java)
+        intent.putExtra(EXTRA_MOVIE, selectedMovie)
+        startActivity(intent)
     }
 
     private fun loadMovieData(sortBy: SortBy) {

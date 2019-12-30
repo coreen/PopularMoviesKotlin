@@ -8,3 +8,7 @@ Recreated [`popular-movies`](https://github.com/coreen/popular-movies) repo usin
   - Timber - built-in logger
   - GSON - JSON parsing
   - Retrofit - network requests
+
+### Screenshots
+
+![ListView](https://github.com/coreen/PopularMoviesKotlin/blob/master/ListView.png)
