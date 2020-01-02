@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
 import com.coreen.popularmovies.model.Movie
@@ -13,6 +14,7 @@ import com.coreen.popularmovies.model.SortBy
 import com.coreen.popularmovies.service.MovieDbApiService
 import com.coreen.popularmovies.service.MovieResponse
 import com.coreen.popularmovies.utility.MovieResponseUtil
+import com.coreen.popularmovies.utility.Constants.EXTRA_MOVIE
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,38 +51,9 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
         loadMovieData(mSort)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.sort_by, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == R.id.action_favorites_sort) {
-            loadMovieData(SortBy.FAVORITES)
-            return true
-        }
-
-        if (item!!.itemId == R.id.action_top_rated_sort) {
-            loadMovieData(SortBy.TOP_RATED)
-            return true
-        }
-
-        if (item!!.itemId == R.id.action_most_popular_sort) {
-            loadMovieData(SortBy.POPULAR)
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onClick(selectedMovie: Movie) {
-        Timber.d("onClick MainActivity")
-        val intent = Intent(this@MainActivity, DetailActivity::class.java)
-        intent.putExtra(EXTRA_MOVIE, selectedMovie)
-        startActivity(intent)
-    }
-
     private fun loadMovieData(sortBy: SortBy) {
+        showLoadingView()
+
         val movieDbApiServe = MovieDbApiService.create()
         var call : Call<MovieResponse>? = null
         /**
@@ -115,14 +88,63 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
                     val movies : List<Movie> = MovieResponseUtil.parse(movieResponse)
 
                     mMovieAdapter!!.setMovieData(movies)
-
+                    showRecyclerView()
                 }
             }
 
             override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                // TODO (coyuen) : add error text message and show if network call fails
                 Timber.e(t, "Error occurred during network call to MovieDb")
+                showErrorMessage()
             }
         })
+    }
+
+    private fun showErrorMessage() {
+        pb_loading_indicator.visibility = View.INVISIBLE
+        recyclerview_movie.visibility = View.INVISIBLE
+        tv_error_message.visibility = View.VISIBLE
+    }
+
+    private fun showLoadingView() {
+        recyclerview_movie.visibility = View.INVISIBLE
+        tv_error_message.visibility = View.INVISIBLE
+        pb_loading_indicator.visibility = View.VISIBLE
+    }
+
+    private fun showRecyclerView() {
+        pb_loading_indicator.visibility = View.INVISIBLE
+        tv_error_message.visibility = View.INVISIBLE
+        recyclerview_movie.visibility = View.VISIBLE
+    }
+
+    override fun onClick(selectedMovie: Movie) {
+        Timber.d("onClick MainActivity")
+        val intent = Intent(this@MainActivity, DetailActivity::class.java)
+        intent.putExtra(EXTRA_MOVIE.value, selectedMovie)
+        startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sort_by, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == R.id.action_favorites_sort) {
+            loadMovieData(SortBy.FAVORITES)
+            return true
+        }
+
+        if (item!!.itemId == R.id.action_top_rated_sort) {
+            loadMovieData(SortBy.TOP_RATED)
+            return true
+        }
+
+        if (item!!.itemId == R.id.action_most_popular_sort) {
+            loadMovieData(SortBy.POPULAR)
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

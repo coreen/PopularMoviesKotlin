@@ -8,7 +8,7 @@ object MovieResponseUtil {
     fun parse(movieResponse: MovieResponse) : List<Movie> {
         val results: List<Result> = movieResponse.results
         var movies: ArrayList<Movie> = arrayListOf()
-        results.forEach { movies.add(Movie(it.title, it.posterPath, it.overview,
+        results.forEach { movies.add(Movie(it.id, it.title, it.posterPath, it.overview,
                 it.releaseDate, it.voteAvg.toString())) }
         return movies
     }

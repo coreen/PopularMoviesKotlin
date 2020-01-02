@@ -1,13 +1,12 @@
 package com.coreen.popularmovies.service
 
+import com.coreen.popularmovies.utility.Constants.MOVIE_DB_BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import timber.log.Timber
-
-const val MOVIE_DB_BASE_URL = "http://api.themoviedb.org/"
 
 interface MovieDbApiService {
     @GET("/3/movie/popular")
@@ -28,7 +27,7 @@ interface MovieDbApiService {
                     .build()
 
             val retrofit = Retrofit.Builder()
-                    .baseUrl(MOVIE_DB_BASE_URL)
+                    .baseUrl(MOVIE_DB_BASE_URL.value)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build()

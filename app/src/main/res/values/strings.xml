@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Popular Movies</string>
 
+    <string name="error_message">An Error Occurred</string>
+
     <string name="most_popular_sort">Most Popular</string>
     <string name="top_rated_sort">Top Rated</string>
     <string name="favorites_sort">Favorites</string>

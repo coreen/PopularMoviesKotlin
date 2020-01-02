@@ -1,12 +1,11 @@
 package com.coreen.popularmovies.service
 
+import com.coreen.popularmovies.utility.Constants.API_KEY_QUERY
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
-
-const val API_KEY_QUERY = "api_key"
 
 class MovieDbInterceptor : Interceptor {
     /**
@@ -19,7 +18,7 @@ class MovieDbInterceptor : Interceptor {
         var request : Request = chain.request()
         val url : HttpUrl = request.url()
                 .newBuilder()
-                .addQueryParameter(API_KEY_QUERY, com.coreen.popularmovies.BuildConfig.apikey)
+                .addQueryParameter(API_KEY_QUERY.value, com.coreen.popularmovies.BuildConfig.apikey)
                 .build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)

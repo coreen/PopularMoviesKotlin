@@ -2,23 +2,23 @@ package com.coreen.popularmovies.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.coreen.popularmovies.utility.Constants.IMAGE_BASE_URL
+import com.coreen.popularmovies.utility.Constants.IMAGE_DEFAULT_POSTER_SIZE
 
 /**
  * Constants defined outside class to maintain equivalent as "private static final"
  *
  * https://blog.egorand.me/where-do-i-put-my-constants-in-kotlin/
  */
-const val IMAGE_BASE_URL = "http://image.tmdb.org/t/p/"
-const val IMAGE_DEFAULT_POSTER_SIZE = "w185"
+
 
 /**
  * Primary constructor is part of class header
  *
  * https://kotlinlang.org/docs/reference/data-classes.html
  */
-data class Movie constructor(val title: String?, private val relativeImagePath: String?,
-                             val summary: String?, val releaseDate: String?,
-                             val voteAvg: String?) : Parcelable {
+data class Movie constructor(val id: Int, val title: String?, private val relativeImagePath: String?,
+                             val summary: String?, val releaseDate: String?, val voteAvg: String?) : Parcelable {
 
     /**
      * Getters and setters automatically defined (val => read-only, no setters; var => both)
@@ -32,7 +32,7 @@ data class Movie constructor(val title: String?, private val relativeImagePath: 
      * https://kotlinlang.org/docs/reference/properties.html
      */
     val imagePath: String
-        get() = IMAGE_BASE_URL + IMAGE_DEFAULT_POSTER_SIZE + relativeImagePath
+        get() = IMAGE_BASE_URL.value + IMAGE_DEFAULT_POSTER_SIZE.value + relativeImagePath
 
 
     /**
@@ -40,12 +40,13 @@ data class Movie constructor(val title: String?, private val relativeImagePath: 
      *
      * https://proandroiddev.com/parcelable-in-kotlin-here-comes-parcelize-b998d5a5fcac
      */
-    constructor(parcel: Parcel?) : this(parcel!!.readString(), parcel.readString(),
+    constructor(parcel: Parcel?) : this(parcel!!.readInt(), parcel.readString(), parcel.readString(),
             parcel.readString(), parcel.readString(), parcel.readString())
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         // only need non-null check for first, all subsequent calls assume based off first call
-        dest!!.writeString(title)
+        dest!!.writeInt(id)
+        dest.writeString(title)
         dest.writeString(relativeImagePath)
         dest.writeString(summary)
         dest.writeString(releaseDate)
