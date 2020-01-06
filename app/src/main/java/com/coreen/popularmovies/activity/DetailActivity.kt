@@ -1,10 +1,13 @@
 package com.coreen.popularmovies.activity
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.coreen.popularmovies.R
+import com.coreen.popularmovies.fragment.TrailerFragment
 import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.utility.Constants.EXTRA_MOVIE
+import com.coreen.popularmovies.utility.Constants.EXTRA_MOVIE_ID
 import com.squareup.picasso.Picasso
 
 /**
@@ -27,5 +30,18 @@ class DetailActivity : AppCompatActivity() {
         tv_release_date.text = movie.releaseDate!!.split("-")[0]
         tv_vote_avg.text = "Rating: " + movie.voteAvg + " / 10"
         tv_summary.text = movie.summary
+
+        // fragments
+        if (savedInstanceState == null) {
+            var bundle = Bundle()
+            bundle.putInt(EXTRA_MOVIE_ID.value, movie.id)
+
+            var trailerFragment: Fragment = TrailerFragment()
+            trailerFragment.arguments = bundle
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.trailer_fragment_placeholder, trailerFragment, "trailers")
+                    .commit()
+        }
     }
 }

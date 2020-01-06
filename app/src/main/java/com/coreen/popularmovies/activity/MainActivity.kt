@@ -13,8 +13,8 @@ import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.model.SortBy
 import com.coreen.popularmovies.service.MovieDbApiService
 import com.coreen.popularmovies.service.MovieResponse
-import com.coreen.popularmovies.utility.MovieResponseUtil
 import com.coreen.popularmovies.utility.Constants.EXTRA_MOVIE
+import com.coreen.popularmovies.utility.ResponseUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
                     Timber.d(mSort.name + " movies received successfully")
 
                     Timber.d("movie count: " + movieResponse!!.results.size)
-                    val movies : List<Movie> = MovieResponseUtil.parse(movieResponse)
+                    val movies : List<Movie> = ResponseUtil.parseMovies(movieResponse)
 
                     mMovieAdapter!!.setMovieData(movies)
                     showRecyclerView()

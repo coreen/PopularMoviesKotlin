@@ -38,6 +38,24 @@
             android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@id/tv_vote_avg" />
 
+        <!--<fragment-->
+            <!--android:id="@+id/fragment"-->
+            <!--android:name="com.coreen.popularmovies.fragment.TrailerFragment"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/tv_summary" />-->
+
+        <FrameLayout
+            android:id="@+id/trailer_fragment_placeholder"
+            style="@style/Fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_summary" />
+
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

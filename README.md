@@ -12,3 +12,6 @@ Recreated [`popular-movies`](https://github.com/coreen/popular-movies) repo usin
 ### Screenshots
 
 ![ListView](https://github.com/coreen/PopularMoviesKotlin/blob/master/ListView.png)
+
+![DetailView](https://github.com/coreen/PopularMoviesKotlin/blob/master/DetailView.png)
+

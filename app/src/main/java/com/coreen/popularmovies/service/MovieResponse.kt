@@ -11,10 +11,10 @@ class MovieResponse {
     @SerializedName("page")
     var page: Int = 0
     @SerializedName("results")
-    var results: List<Result> = emptyList()
+    var results: List<MovieResult> = emptyList()
 }
 
-class Result {
+class MovieResult {
     /**
      * Convert underscore field names to Java format
      *

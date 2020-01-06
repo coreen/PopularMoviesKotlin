@@ -6,4 +6,6 @@
     <string name="most_popular_sort">Most Popular</string>
     <string name="top_rated_sort">Top Rated</string>
     <string name="favorites_sort">Favorites</string>
+
+    <string name="no_trailers">No Trailers</string>
 </resources>

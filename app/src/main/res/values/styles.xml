@@ -15,4 +15,12 @@
         <item name="android:visibility">invisible</item>
     </style>
 
+    <!-- Need API 17 min for marginStart and marginEnd style support -->
+    <style name="Fragment">
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_margin</item>
+    </style>
+
 </resources>

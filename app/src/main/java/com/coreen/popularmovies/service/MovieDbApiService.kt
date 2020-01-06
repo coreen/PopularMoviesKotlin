@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import timber.log.Timber
 
 interface MovieDbApiService {
@@ -14,6 +15,9 @@ interface MovieDbApiService {
 
     @GET("/3/movie/top_rated")
     fun getTopRatedMovies(): Call<MovieResponse>
+
+    @GET("/3/movie/{id}/videos")
+    fun getTrailers(@Path("id") id: Int?): Call<TrailerResponse>
 
     companion object {
         fun create(): MovieDbApiService {
