@@ -43,16 +43,16 @@ internal class MovieAdapter constructor(private val context: Context,
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MovieAdapterViewHolder {
-        val layoutInflater : LayoutInflater = LayoutInflater.from(parent.context)
-        return MovieAdapterViewHolder(
-                layoutInflater.inflate(R.layout.movie_list_item, parent, false))
-    }
-
     override fun onBindViewHolder(holder: MovieAdapterViewHolder, position: Int) {
         val selectedMovie : Movie = movies!![position]
         Picasso.with(context).load(selectedMovie.imagePath).into(holder.mMovieImageView)
         holder.mMovieTitle.text = selectedMovie.title
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MovieAdapterViewHolder {
+        val layoutInflater : LayoutInflater = LayoutInflater.from(parent.context)
+        return MovieAdapterViewHolder(
+                layoutInflater.inflate(R.layout.movie_list_item, parent, false))
     }
 
     override fun getItemCount(): Int {

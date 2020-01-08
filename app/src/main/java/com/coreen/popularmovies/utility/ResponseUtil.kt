@@ -15,11 +15,7 @@ object ResponseUtil {
         return movies
     }
 
-    fun parseTrailers(trailerResponse: TrailerResponse) : List<String> {
-        val results: List<TrailerResult> = trailerResponse.results
-        var trailerLinks: ArrayList<String> = arrayListOf()
-        results.forEach { trailerLinks.add(it.key!!) }
-
-        return trailerLinks
+    fun parseTrailers(trailerResponse: TrailerResponse) : List<TrailerResult> {
+        return trailerResponse.results
     }
 }

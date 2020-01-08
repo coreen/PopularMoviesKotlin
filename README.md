@@ -15,3 +15,5 @@ Recreated [`popular-movies`](https://github.com/coreen/popular-movies) repo usin
 
 ![DetailView](https://github.com/coreen/PopularMoviesKotlin/blob/master/DetailView.png)
 
+![DetailView2](https://github.com/coreen/PopularMoviesKotlin/blob/master/DetailView2.png)
+
