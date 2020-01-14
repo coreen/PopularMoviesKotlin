@@ -19,6 +19,9 @@ interface MovieDbApiService {
     @GET("/3/movie/{id}/videos")
     fun getTrailers(@Path("id") id: Int?): Call<TrailerResponse>
 
+    @GET("/3/movie/{id}/reviews")
+    fun getReviews(@Path("id") id: Int?): Call<ReviewResponse>
+
     companion object {
         fun create(): MovieDbApiService {
             /**

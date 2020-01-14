@@ -1,6 +1,5 @@
 package com.coreen.popularmovies.adapter
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,7 @@ import com.coreen.popularmovies.R
 import com.coreen.popularmovies.service.TrailerResult
 import timber.log.Timber
 
-internal class TrailerAdapter constructor(private val context: Context,
-                                          private val clickHandler: TrailerAdapterOnClickHandler)
+internal class TrailerAdapter constructor(private val clickHandler: TrailerAdapterOnClickHandler)
     : RecyclerView.Adapter<TrailerAdapter.TrailerAdapterViewHolder>() {
 
     private var trailers: List<TrailerResult>? = null

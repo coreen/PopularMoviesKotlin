@@ -64,7 +64,7 @@ class TrailerFragment : Fragment(), TrailerAdapter.TrailerAdapterOnClickHandler 
         super.onActivityCreated(savedInstanceState)
         Timber.d("TrailerFragment onActivityCreated")
 
-        mTrailerAdapter = TrailerAdapter(context!!, this@TrailerFragment)
+        mTrailerAdapter = TrailerAdapter(this@TrailerFragment)
         recyclerview_trailer.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
         recyclerview_trailer.setHasFixedSize(true)
@@ -99,7 +99,11 @@ class TrailerFragment : Fragment(), TrailerAdapter.TrailerAdapterOnClickHandler 
                     val trailers : List<TrailerResult> = ResponseUtil.parseTrailers(trailerResponse)
 
                     mTrailerAdapter!!.setTrailerData(trailers)
-                    showListView()
+                    if (mTrailerAdapter!!.itemCount == 0) {
+                        showErrorMessage()
+                    } else {
+                        showListView()
+                    }
                 }
             }
 

@@ -4,28 +4,28 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="@string/trailers_header"
+        android:text="@string/reviews_header"
         android:textSize="8pt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_trailer"
+        android:id="@+id/recyclerview_reviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="48dp" />
 
     <TextView
-        android:id="@+id/tv_no_trailers"
+        android:id="@+id/tv_no_reviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/no_trailers"
+        android:text="@string/no_reviews"
         android:visibility="invisible" />
 
     <ProgressBar
-        android:id="@+id/pb_trailer_loading_indicator"
+        android:id="@+id/pb_review_loading_indicator"
         style="@style/LoadingIndicator" />
 
 </FrameLayout>

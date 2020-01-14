@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.coreen.popularmovies.R
+import com.coreen.popularmovies.fragment.ReviewFragment
 import com.coreen.popularmovies.fragment.TrailerFragment
 import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.utility.Constants.EXTRA_MOVIE
@@ -38,9 +39,13 @@ class DetailActivity : AppCompatActivity() {
 
             var trailerFragment: Fragment = TrailerFragment()
             trailerFragment.arguments = bundle
+            var reviewFragment: Fragment = ReviewFragment()
+            reviewFragment.arguments = bundle
+
             supportFragmentManager
                     .beginTransaction()
                     .add(R.id.trailer_fragment_placeholder, trailerFragment, "trailers")
+                    .add(R.id.review_fragment_placeholder, reviewFragment, "reviews")
                     .commit()
         }
     }
