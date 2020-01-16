@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
+import com.coreen.popularmovies.database.AppDatabase
 import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.model.SortBy
 import com.coreen.popularmovies.service.MovieDbApiService
@@ -25,13 +26,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandler {
     // default sort is by popular movies
     private var mSort : SortBy = SortBy.POPULAR
-
     private var mMovieAdapter: MovieAdapter? = null
+    private lateinit var mDb: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Timber.plant(Timber.DebugTree())
+
+        mDb = AppDatabase.getInstance(applicationContext)
 
         /**
          * replaced GridView setup

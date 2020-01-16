@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
@@ -26,6 +27,11 @@ android {
     }
 }
 
+/**
+ * Known warning with "3rd-party Gradle plug-ins may be the cause" message
+ *
+ * https://stackoverflow.com/questions/49545776/why-is-3rd-party-gradle-plug-ins-may-be-the-cause-showing-after-updating-gradl
+ */
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -38,6 +44,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    // RESOURCE: https://developer.android.com/jetpack/androidx/releases/room#declaring_dependencies
+    implementation "androidx.room:room-runtime:2.2.3"
+    kapt "androidx.room:room-compiler:2.2.3"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
