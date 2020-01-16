@@ -132,19 +132,32 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        when (mSort) {
+            SortBy.POPULAR -> menu.findItem(R.id.action_most_popular_sort).isChecked = true
+            SortBy.TOP_RATED -> menu.findItem(R.id.action_top_rated_sort).isChecked = true
+            SortBy.FAVORITES -> menu.findItem(R.id.action_favorites_sort).isChecked = true
+            else -> menu.findItem(R.id.action_most_popular_sort).isChecked = true
+        }
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item!!.itemId == R.id.action_favorites_sort) {
             loadMovieData(SortBy.FAVORITES)
+            item.isChecked = !item.isChecked
             return true
         }
 
         if (item!!.itemId == R.id.action_top_rated_sort) {
             loadMovieData(SortBy.TOP_RATED)
+            item.isChecked = !item.isChecked
             return true
         }
 
         if (item!!.itemId == R.id.action_most_popular_sort) {
             loadMovieData(SortBy.POPULAR)
+            item.isChecked = !item.isChecked
             return true
         }
 

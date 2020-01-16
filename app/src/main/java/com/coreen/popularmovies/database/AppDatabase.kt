@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.coreen.popularmovies.utility.SingletonHolder
 
 /**
  * Architecture components instead of Content Provider for internal database
@@ -15,9 +14,6 @@ import com.coreen.popularmovies.utility.SingletonHolder
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
 
-//    companion object : SingletonHolder<AppDatabase, Context>({
-//        Room.databaseBuilder(it.applicationContext, AppDatabase::class.java,"favorite.db").build()
-//    })
     /**
      * Singleton with activity example
      *
