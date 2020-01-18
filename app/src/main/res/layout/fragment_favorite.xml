@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_movie"
+        android:id="@+id/recyclerview_favorite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -16,22 +14,16 @@
         android:horizontalSpacing="10dp"
         android:stretchMode="spacingWidthUniform" />
 
-    <FrameLayout
-        android:id="@+id/favorite_fragment_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <TextView
-        android:id="@+id/tv_error_message"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_no_favorites"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/error_message"
-        android:padding="16dp"
-        android:textSize="20sp"
-        android:visibility="invisible" />
+        android:text="@string/no_favorites"
+        android:visibility="invisible"
+        android:layout_marginTop="8dp" />
 
     <ProgressBar
-        android:id="@+id/pb_loading_indicator"
+        android:id="@+id/pb_favorite_loading_indicator"
         style="@style/LoadingIndicator" />
 
 </FrameLayout>

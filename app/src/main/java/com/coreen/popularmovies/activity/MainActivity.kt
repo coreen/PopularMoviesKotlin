@@ -9,7 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
-import com.coreen.popularmovies.database.AppDatabase
+import com.coreen.popularmovies.fragment.FavoriteFragment
 import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.model.SortBy
 import com.coreen.popularmovies.service.MovieDbApiService
@@ -27,14 +27,12 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
     // default sort is by popular movies
     private var mSort : SortBy = SortBy.POPULAR
     private var mMovieAdapter: MovieAdapter? = null
-    private lateinit var mDb: AppDatabase
+    private var mFavoriteFragment: FavoriteFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Timber.plant(Timber.DebugTree())
-
-        mDb = AppDatabase.getInstance(applicationContext)
 
         /**
          * replaced GridView setup
@@ -64,8 +62,12 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
          *
          * https://kotlinlang.org/docs/reference/control-flow.html#when-expression
          */
+        mSort = sortBy
         when(sortBy) {
-            SortBy.FAVORITES -> println("NotImplementException: (TODO) show Room database contents")
+            SortBy.FAVORITES -> {
+                showFavoriteFragment()
+                return
+            }
             SortBy.TOP_RATED -> {
                 call = movieDbApiServe.getTopRatedMovies()
             }
@@ -74,7 +76,6 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
                 call = movieDbApiServe.getPopularMovies()
             }
         }
-        mSort = sortBy
         /**
          * Network call setup
          *
@@ -118,6 +119,34 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
         pb_loading_indicator.visibility = View.INVISIBLE
         tv_error_message.visibility = View.INVISIBLE
         recyclerview_movie.visibility = View.VISIBLE
+        // hide favorite fragment if already loaded
+        if (mFavoriteFragment != null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .hide(mFavoriteFragment)
+                    .commit()
+        }
+    }
+
+    private fun showFavoriteFragment() {
+        pb_loading_indicator.visibility = View.INVISIBLE
+        tv_error_message.visibility = View.INVISIBLE
+        recyclerview_movie.visibility = View.INVISIBLE
+        if (mFavoriteFragment == null) {
+            mFavoriteFragment = FavoriteFragment()
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.favorite_fragment_placeholder, mFavoriteFragment, "favorites")
+                    .commit()
+        } else {
+            // show hidden fragment
+            supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .show(mFavoriteFragment)
+                    .commit()
+        }
     }
 
     override fun onClick(selectedMovie: Movie) {
@@ -137,7 +166,6 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
             SortBy.POPULAR -> menu.findItem(R.id.action_most_popular_sort).isChecked = true
             SortBy.TOP_RATED -> menu.findItem(R.id.action_top_rated_sort).isChecked = true
             SortBy.FAVORITES -> menu.findItem(R.id.action_favorites_sort).isChecked = true
-            else -> menu.findItem(R.id.action_most_popular_sort).isChecked = true
         }
         return true
     }

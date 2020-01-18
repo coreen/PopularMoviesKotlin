@@ -100,7 +100,7 @@ class TrailerFragment : Fragment(), TrailerAdapter.TrailerAdapterOnClickHandler 
 
                     mTrailerAdapter!!.setTrailerData(trailers)
                     if (mTrailerAdapter!!.itemCount == 0) {
-                        showErrorMessage()
+                        showNoneMessage()
                     } else {
                         showListView()
                     }
@@ -109,12 +109,12 @@ class TrailerFragment : Fragment(), TrailerAdapter.TrailerAdapterOnClickHandler 
 
             override fun onFailure(call: Call<TrailerResponse>?, t: Throwable?) {
                 Timber.e(t, "Error occurred during network call to MovieDb")
-                showErrorMessage()
+                showNoneMessage()
             }
         })
     }
 
-    private fun showErrorMessage() {
+    private fun showNoneMessage() {
         pb_trailer_loading_indicator.visibility = View.INVISIBLE
         recyclerview_trailer.visibility = View.INVISIBLE
         tv_no_trailers.visibility = View.VISIBLE

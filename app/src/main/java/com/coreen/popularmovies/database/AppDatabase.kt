@@ -23,10 +23,11 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
         fun getInstance(context:Context): AppDatabase{
             if (INSTANCE == null){
-                INSTANCE = Room.databaseBuilder(
-                        context,
-                        AppDatabase::class.java,
-                        "roomdb")
+                INSTANCE = Room.databaseBuilder(context, AppDatabase::class.java, "roomdb")
+                        // Hack
+                        // resource: https://stackoverflow.com/questions/44167111/android-room-simple-select-query-cannot-access-database-on-the-main-thread
+                        // TODO (coyuen): switch to LiveData / Kotlin Coroutine
+                        .allowMainThreadQueries()
                         .build()
             }
 

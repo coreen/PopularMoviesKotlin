@@ -57,7 +57,7 @@ class ReviewFragment : Fragment() {
 
                     mReviewAdapter!!.setReviewData(reviews)
                     if (mReviewAdapter!!.itemCount == 0) {
-                        showErrorMessage()
+                        showNoneMessage()
                     } else {
                         showListView()
                     }
@@ -66,12 +66,12 @@ class ReviewFragment : Fragment() {
 
             override fun onFailure(call: Call<ReviewResponse>?, t: Throwable?) {
                 Timber.e(t, "Error occurred during network call to MovieDb")
-                showErrorMessage()
+                showNoneMessage()
             }
         })
     }
 
-    private fun showErrorMessage() {
+    private fun showNoneMessage() {
         pb_review_loading_indicator.visibility = View.INVISIBLE
         recyclerview_reviews.visibility = View.INVISIBLE
         tv_no_reviews.visibility = View.VISIBLE

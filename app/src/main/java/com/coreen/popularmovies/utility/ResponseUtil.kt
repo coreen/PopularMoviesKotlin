@@ -1,5 +1,6 @@
 package com.coreen.popularmovies.utility
 
+import com.coreen.popularmovies.database.Favorite
 import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.service.*
 
@@ -18,5 +19,10 @@ object ResponseUtil {
 
     fun parseReviews(reviewResponse: ReviewResponse): List<ReviewResult> {
         return reviewResponse.results
+    }
+
+    fun convertFavorite(favorite: Favorite): Movie {
+        return Movie(favorite.movieId, favorite.title, favorite.relativeImagePath,
+                favorite.summary, favorite.releaseDate, favorite.voteAvg)
     }
 }
