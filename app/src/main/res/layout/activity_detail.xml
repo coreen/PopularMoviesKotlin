@@ -17,11 +17,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp">
 
-        <TextView
-            android:id="@+id/tv_release_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24pt" />
+        <!-- resource: https://stackoverflow.com/questions/5891480/how-to-make-a-button-align-to-the-right-in-a-layout -->
+        <RelativeLayout
+            android:id="@+id/top_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="24pt" />
+
+            <Button
+                android:id="@+id/favorite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/mark_as_favorite" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_vote_avg"
@@ -29,7 +45,7 @@
             android:layout_height="wrap_content"
             android:textSize="10pt"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tv_release_date" />
+            app:layout_constraintTop_toBottomOf="@id/top_line" />
 
         <TextView
             android:id="@+id/tv_summary"
