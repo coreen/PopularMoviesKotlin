@@ -17,7 +17,7 @@ interface FavoriteDao {
     fun getAll(): List<Favorite>
 
     @Query("SELECT * FROM favorite WHERE movieId LIKE :movieId")
-    fun findById(movieId: Int): Favorite
+    fun findById(movieId: Int): Favorite?
 
     @Insert
     fun insert(favorite: Favorite)

@@ -2,8 +2,10 @@ package com.coreen.popularmovies.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.coreen.popularmovies.database.AppDatabase
 import com.coreen.popularmovies.utility.Constants.IMAGE_BASE_URL
 import com.coreen.popularmovies.utility.Constants.IMAGE_DEFAULT_POSTER_SIZE
+import com.coreen.popularmovies.utility.DataUtil
 
 /**
  * Constants defined outside class to maintain equivalent as "private static final"
@@ -17,7 +19,7 @@ import com.coreen.popularmovies.utility.Constants.IMAGE_DEFAULT_POSTER_SIZE
  *
  * https://kotlinlang.org/docs/reference/data-classes.html
  */
-data class Movie constructor(val id: Int, val title: String?, private val relativeImagePath: String?,
+data class Movie constructor(val id: Int, val title: String?, val relativeImagePath: String?,
                              val summary: String?, val releaseDate: String?, val voteAvg: String?) : Parcelable {
 
     /**
@@ -33,6 +35,10 @@ data class Movie constructor(val id: Int, val title: String?, private val relati
      */
     val imagePath: String
         get() = IMAGE_BASE_URL.value + IMAGE_DEFAULT_POSTER_SIZE.value + relativeImagePath
+
+    fun isFavorite(mDb: AppDatabase): Boolean {
+        return DataUtil.isFavorite(mDb, id)
+    }
 
 
     /**

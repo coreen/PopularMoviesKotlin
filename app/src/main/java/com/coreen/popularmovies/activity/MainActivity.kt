@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import com.coreen.popularmovies.R
 import com.coreen.popularmovies.adapter.MovieAdapter
+import com.coreen.popularmovies.database.AppDatabase
 import com.coreen.popularmovies.fragment.FavoriteFragment
 import com.coreen.popularmovies.model.Movie
 import com.coreen.popularmovies.model.SortBy
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
     private var mSort : SortBy = SortBy.POPULAR
     private var mMovieAdapter: MovieAdapter? = null
     private var mFavoriteFragment: FavoriteFragment? = null
+    private lateinit var mDb: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,8 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterOnClickHandle
          *
          * https://stackoverflow.com/questions/41617042/how-to-access-activity-this-in-kotlin/41620834
          */
-        mMovieAdapter = MovieAdapter(this@MainActivity, this@MainActivity)
+        mDb = AppDatabase.getInstance(applicationContext)
+        mMovieAdapter = MovieAdapter(mDb, this@MainActivity, this@MainActivity)
         recyclerview_movie.adapter = mMovieAdapter
 
         loadMovieData(mSort)
